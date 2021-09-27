@@ -1,0 +1,1016 @@
+<title>Scramble 2.0</title>
+
+<img src="http://i.imgur.com/4XV4p.gif" name="Scramble" alt="Scramble"><br>
+<img src="http://i.imgur.com/rD5Ai.gif">
+
+
+<style type="text/css">
+body
+{
+background-color:#D8D8D8;
+}
+</style>
+
+
+<font  style="font-family:Comic sans ms;">
+<h1>Scramble Version 2.0</h1>
+	<font color="grey">The most important aspect of Scratch are the blocks, divided into eight categories. Blocks are like procedures, that execute some code. The problem is that there is a limited amount of blocks that come with the package. More importantly,  making them is not straightforward at all! This is where Scramble comes in. Scramble allows you to create your own blocks in an interactive form-based environment. Scramble was created by Hardmath123. The best part is that it runs right in your web browser, so you don't need to install anything. Enjoy!</font><br><font color="lightGrey">Hardmath123</font><br>
+<br><input type="button" value="Open a new project in a new window" onclick="window.open(window.location)">
+<h2>Step I: The Blueprint</h2>
+<font color="grey">Firstly, we'll describe our block. This step will create the coding that renders your block. This is called the <i>blockspec</i>.<br><br></font>
+<h3>Type a 3 to 5 symbol name for your block. It needs to use only the 26 letters, or their capitalized versions.</h3>
+<input type="text" id="name" value="myBlk" size="100" style="font-family:Courier New, monospace;">
+<br>
+<br>
+<h3>What kind of block are you making?</h3><br>
+<input type="radio" name="type" value="r" onclick="settype(this.value)"><img src="http://i.imgur.com/ZfooP.gif"><br><br>
+<input type="radio" name="type" value="b" onclick="settype(this.value)"><img src="http://i.imgur.com/WiQyB.gif"><br><br>
+<input type="radio" name="type" value="-" onclick="settype(this.value)"><img src="http://i.imgur.com/hSvSa.gif"><br>
+<br>
+<br>
+<h3>Let's insert the text!</h3>
+<font color="grey">Click on an inserter's name to add its coding in. Use the clear button rather than the delete button to delete text.<br>
+<input type="text" id="text" value="text here" size="100" style="font-family:Courier New, monospace;"><input type="button" value="Clear" onclick="clearTxt()"><br><br>
+<img src="http://i.imgur.com/4gNsS.gif"><br><input type="button" onClick="addNum()" value="Add this inserter!"><br><br>
+<img src="http://i.imgur.com/yhvBJ.gif"><br><input type="button" onClick="addString()" value="Add this inserter!"><br><br>
+<img src="http://i.imgur.com/MpyZa.gif"><br><input type="button" onClick="addBoolean()" value="Add this inserter!"><br><br><br>
+<img src="http://i.imgur.com/RNIOO.gif">
+<br><input type="radio" name="dropdownTypes" value="S" onclick="setInserterType(this.value)">Sprite menu
+<br><input type="radio" name="dropdownTypes" value="k" onclick="setInserterType(this.value)">Keys menu
+<br><input type="radio" name="dropdownTypes" value="f" onclick="setInserterType(this.value)">Math functions menu
+<br><input type="radio" name="dropdownTypes" value="l" onclick="setInserterType(this.value)">Costume names menu
+<br><input type="button" onClick="addDropDown()" value="Add this inserter!"><br>
+<br></font>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h3>And that's it!</h3>
+<input type="button" value="Click me. . ." onClick="getSpec()"><br>
+<input id="blockspec" type="text" value=". . . and the blockspec will appear here!" size="100" readonly style="font-family:Courier New, monospace;"><br>
+
+
+
+<!--Step I scripts-->
+
+
+<script type="text/javascript">
+var inserterNum = 0
+var call=""
+var type
+var inserterType
+function clearTxt()
+{
+	document.getElementById("text").value = ""
+	inserterNum = 0
+	alert("Cleared!")
+	document.getElementById("text").focus()
+}
+function addNum()
+{
+	document.getElementById("text").value = document.getElementById("text").value + " %n "
+	inserterNum = inserterNum + 1
+	document.getElementById("text").focus()
+}
+function addBoolean()
+{
+	document.getElementById("text").value = document.getElementById("text").value + " %b "
+	inserterNum = inserterNum + 1
+	document.getElementById("text").focus()	
+}
+function addString()
+{
+	document.getElementById("text").value = document.getElementById("text").value + " %s "
+	inserterNum = inserterNum + 1	
+	document.getElementById("text").focus()
+}
+function setInserterType(val)
+{
+	inserterType=val
+}
+function addDropDown()
+{
+	document.getElementById("text").value = document.getElementById("text").value + " %"+inserterType+" "
+	inserterNum = inserterNum + 1	
+	document.getElementById("text").focus()
+}
+function getSpec()
+{
+	call = ""
+	callName = ""
+	var n
+	var callName = ""
+	if (inserterNum == 0) {callName=document.getElementById("name").value; call=document.getElementById("name").value}
+	for (n=1;n<=inserterNum;n=n+1)
+	{
+		callName = callName+document.getElementById("name").value+":"
+		call = call+document.getElementById("name").value+":"+" i"+n+" "
+	}
+	call = call + "\n"
+	document.getElementById("blockspec").value="('"+document.getElementById("text").value+"' #"+type+" #"+callName+")"
+	render()
+}
+
+function settype(typeTemp)
+	{type = typeTemp}
+</script>
+<font color="grey">
+Congratulations! You have made the blockspec of your block! Now, you have to code it-that's the hard part.</font>
+<hr>
+<br><br><br><br><br><br>
+<hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Step II: Code it!</h2>
+
+
+
+<h3>Add temporary variables</h3>
+<font color="grey">
+Click the add button to add temporary variables. You currently have:<input type="text" size=4 id="numberOfVariables" value="0" readonly> temporary variables.</font><input type="button" value="Add. . ." onclick="addVars()">
+<script type="text/javascript">
+var a=""
+var aSimple=""
+function addVars()
+{
+	document.getElementById("numberOfVariables").value=document.getElementById("numberOfVariables").value*1+1
+	if (!(document.getElementById("numberOfVariables").value <= 0))
+	{
+		a = ""
+		var i=document.getElementById("numberOfVariables").value
+		var j
+
+		for (j=i; j>0; j=j-1)
+		{
+			a=a+" t"+j
+		}
+		a = "|"+a+" |"+"\n"
+		aSimple="There are "+document.getElementById("numberOfVariables").value+" temporary variables in this script."+"\n"
+		render()
+
+	}
+	alert("Added!")
+}
+</script>
+<br><font color="#D0D0D0">To access the nth temporary variable in the script, use tn, i.e. the first variable is t1, the second is t2, and so on. To access the values added in the block's inserter(s), use i1, i2, etc. <i>in order of appearance in the blockspec</i>.</font>
+
+
+
+<h3>The last bit. . .</h3>
+<font color="grey">
+The hard part is to actually code it - write down what the block is going to do, and how. Click a button to get that block. Fill out all the inputs, then click add to add it to the script.
+</color>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--JS blockspecs here-->
+<!--||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+<!--____________________________________________________________________________________________________________________________________________________________________________-->
+<!--============================================================================================================================================================================-->
+
+
+
+
+
+<br><br><br><br><img src="http://i.imgur.com/VVBC0.gif">
+<br><a href="#blockBin"><img src="http://i.imgur.com/fkRB9.gif" onclick="setBin(1)"></a>
+<br><a href="#blockBin"><img src="http://i.imgur.com/FkLfe.gif" onclick="setBin(2)"></a>
+<br><a href="#blockBin"><img src="http://i.imgur.com/XTvaM.gif" onclick="setBin(3)"></a>
+<br><a href="#blockBin"><img src="http://i.imgur.com/jZA9G.gif" onclick="setBin(4)"></a>
+<br><a href="#blockBin"><img src="http://i.imgur.com/DQtAn.gif" onclick="setBin(5)"></a>
+<br><a href="#blockBin"><img src="http://i.imgur.com/Ze0KH.gif" onclick="setBin(6)"></a>
+<br><a href="#blockBin"><img src="http://i.imgur.com/wG1Rn.gif" onclick="setBin(7)"></a>
+<br><a href="#blockBin"><img src="http://i.imgur.com/bKNYn.gif" onclick="setBin(8)"></a>
+<br><a href="#blockBin"><img src="http://i.imgur.com/nTEgT.gif" onclick="setBin(9); renderCustom()"></a>
+
+
+
+<br><a id="#blockBin">Your block palette:</a>
+<br><blockquote id="blockBin"></blockquote>
+
+
+<br>
+<br>
+
+
+
+
+<br><input type="button" value="Get it!" onclick="getBlock()">
+
+<br>Your current command (simplified):<input type="text" readonly size=100 id="currentBlockSimple" readonly style="font-family:Monaco, monospace;">
+<br>Your current command (actual):<input type="text" readonly size=100 id="currentBlock" readonly style="font-family:Monaco, monospace;">
+
+<br><input type="button" value="Add it to the script!" onclick="closeBlock()" id="add">
+
+
+
+
+
+<br>Your blockspec: <input type="text" id="bsCopy" readonly style="font-family:Monaco, monospace;" size=100><input type="button" onclick="selectBS()" value="Select all">
+<br><br><b>Your code:</b>
+<br><input type="button" onclick="selectCD()" value="Select all">
+<br><textarea readonly id="Code" rows="20" cols="100" style="font-family:Monaco, monospace;" ></textarea>
+
+<br><br><b>Your code, simplified:</b>
+<br><textarea readonly id="CodeSimple" rows="20" cols="100" style="font-family:Comic sans ms"></textarea>
+
+<br><input type="button" value="Delete last command. . ." onclick="delLast()">
+
+
+
+
+
+
+<!--Step II Scripts-->
+<script type="text/javascript">
+var blockName="move"
+var code=""
+var codeSimple=""
+var customScripts = readCookie("code").replace("null", "")
+document.getElementById("custom").innerHTML = readCookie("spec").replace("null", "")
+
+
+function setBin(type)
+{
+	document.getElementById("blockBin").innerHTML = document.getElementById("bin"+type).innerHTML
+}
+function setBlockVal(val)
+{
+	blockName=val
+}
+
+function getBlock()
+{
+	var tempInputA
+	var tempInputB
+	var tempInputC
+	document.getElementById("currentBlockSimple").value=""
+	document.getElementById("currentBlock").value=""
+/*Motion
+*/
+	if (blockName=="move")
+	{
+		tempInputA=prompt("Enter how far: Number, Input variable, or Temporary variable")
+		document.getElementById("currentBlock").value="self forward:"+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Move "+tempInputA+" steps."
+	}
+	if (blockName=="setPos")
+	{
+		tempInputA=prompt("Enter the X position: Number, Input variable, or Temporary variable")
+		tempInputB=prompt("Enter the Y position: Number, Input variable, or Temporary variable")
+		document.getElementById("currentBlock").value="self gotoX: "+tempInputA+" y:"+tempInputB+"."
+		document.getElementById("currentBlockSimple").value="Go to X "+tempInputA+" Y:"+tempInputB
+	}
+	if (blockName=="setAngle")
+	{
+		tempInputA=prompt("Enter how many degrees: Number, Input variable, or Temporary variable")
+		document.getElementById("currentBlock").value="self heading:"+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Turn to the angle "+tempInputA+" degrees."
+	}
+	if (blockName=="turn")
+	{
+		tempInputA=prompt("Enter how many degrees [clockwise]: Number, Input variable, or Temporary variable")
+		document.getElementById("currentBlock").value="self turnRight:"+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Turn "+tempInputA+" degrees clockwise."
+	}
+	if (blockName=="xpos")
+	{
+		tempInputA=prompt("Enter a variable to set.")
+		document.getElementById("currentBlock").value=tempInputA+"_ self xpos."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the X position."
+	}
+	if (blockName=="ypos")
+	{
+		tempInputA=prompt("Enter a variable to set.")
+		document.getElementById("currentBlock").value=tempInputA+"_ self ypos."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the Y position."
+	}
+	if (blockName=="dir")
+	{
+		tempInputA=prompt("Enter a variable to set.")
+		document.getElementById("currentBlock").value=tempInputA+"_ self heading."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the direction."
+	}
+	if (blockName=="changeX")
+	{
+		tempInputA=prompt("Enter a variable or number to change it by:")
+		document.getElementById("currentBlock").value="self gotoX: (" + tempInputA+"+self xpos) y: self ypos."
+		document.getElementById("currentBlockSimple").value="Change X by "+tempInputA+"."
+	}
+	if (blockName=="changeY")
+	{
+		tempInputA=prompt("Enter a variable or number to change it by:")
+		document.getElementById("currentBlock").value="self gotoX: self xpos y: (" + tempInputA+"+ self ypos)."
+		document.getElementById("currentBlockSimple").value="Change Y by "+tempInputA+"."
+	}
+
+/*Control
+*/
+	if (blockName=="report")
+	{
+		tempInputA=prompt("Enter what to report: Number, Input variable, or Temporary variable")
+		document.getElementById("currentBlock").value="^ "+tempInputA
+		document.getElementById("currentBlockSimple").value="Report "+tempInputA
+	}
+	if (blockName=="reportText")
+	{
+		tempInputA=prompt("Enter what to report: Text")
+		document.getElementById("currentBlock").value="^ '"+tempInputA+"'"
+		document.getElementById("currentBlockSimple").value="Report "+tempInputA
+	}
+	if (blockName=="selfDefinedCommand")
+	{
+		tempInputA=prompt("Enter command:")
+		document.getElementById("currentBlock").value=tempInputA
+		document.getElementById("currentBlockSimple").value="Do "+tempInputA
+	}
+	if (blockName=="repeat")
+	{
+		tempInputA=prompt("Enter how many times: Number, Input variable, or Temporary variable")
+		document.getElementById("currentBlock").value=tempInputA+" timesRepeat: ["
+		document.getElementById("currentBlockSimple").value="Repeat "+tempInputA+" times"
+	}
+	if (blockName=="ifEQ")
+	{
+		tempInputA=prompt("Enter value 1: any data type")
+		tempInputB=prompt("Enter value 2: any data type")
+		document.getElementById("currentBlock").value=tempInputA+" = "+tempInputB+" ifTrue: ["
+		document.getElementById("currentBlockSimple").value="If "+tempInputA+" is equal to "+tempInputB
+	}
+	if (blockName=="ifNEQ")
+	{
+		tempInputA=prompt("Enter value 1: any data type")
+		tempInputB=prompt("Enter value 2: any data type")
+		document.getElementById("currentBlock").value=tempInputA+" = "+tempInputB+" ifFalse: ["
+		document.getElementById("currentBlockSimple").value="If "+tempInputA+" is not equal to "+tempInputB
+	}
+	if (blockName=="ifGT")
+	{
+		tempInputA=prompt("Enter value 1: number or variable")
+		tempInputB=prompt("Enter value 2: number or variable")
+		document.getElementById("currentBlock").value=tempInputA+" > "+tempInputB+" ifTrue: ["
+		document.getElementById("currentBlockSimple").value="If "+tempInputA+" is greater than "+tempInputB
+	}
+	if (blockName=="endCC")
+	{
+		document.getElementById("currentBlock").value="]."
+		document.getElementById("currentBlockSimple").value="End conditional code (repeat or if)"
+	}
+	if (blockName=="ifInput")
+	{
+		tempInputA=prompt("Enter variable to use: Temporary variable")
+		document.getElementById("currentBlock").value= tempInputA+" ifTrue: ["
+		document.getElementById("currentBlockSimple").value="If "+tempInputA+" is true, do the following:"
+		alert("Use the \"end if block\" block under control to end the if block")
+	}
+	if (blockName=="ifInputFalse")
+	{
+		tempInputA=prompt("Enter variable to use: Temporary variable")
+		document.getElementById("currentBlock").value= tempInputA+" ifFalse: ["
+		document.getElementById("currentBlockSimple").value="If "+tempInputA+" is false, do the following:"
+		alert("Use the \"end if block\" block under control to end the if block")
+	}
+	if (blockName=="addComment")
+	{
+		tempInputA=prompt("Enter comment")
+		document.getElementById("currentBlock").value= "\""+tempInputA+"\""
+		document.getElementById("currentBlockSimple").value="Note: "+tempInputA
+	}
+	if (blockName=="link")
+	{
+		tempInputA=prompt("Enter URL, stored in a variable, with \"http://\" prefix")
+		document.getElementById("currentBlock").value= "Cursor wait showWhile: [ScratchPlugin primOpenURL: "+tempInputA+"]"
+		document.getElementById("currentBlockSimple").value="Go to URL stored in variable "+tempInputA
+	}
+	if (blockName=="beep")
+	{
+		document.getElementById("currentBlock").value= "self beep."
+		document.getElementById("currentBlockSimple").value="Emit a beep."
+	}
+
+
+	if (blockName=="cloneSPR")
+	{
+		document.getElementById("currentBlock").value= "self duplicateNoAttach."
+		document.getElementById("currentBlockSimple").value="Clone me."
+	}
+	if (blockName=="DelSPR")
+	{
+		document.getElementById("currentBlock").value= "self undoableDeleteSprite."
+		document.getElementById("currentBlockSimple").value="Delete me."
+	}
+	if (blockName=="steppingSpeed")
+	{
+		tempInputA=prompt("Enter time in milliseconds.")
+		document.getElementById("currentBlock").value= "ScratchProcess blockHighlightMSecs: "+tempInputA
+		document.getElementById("currentBlockSimple").value="Wait "+tempInputA+" milliseconds between blocks."
+	}
+	if (blockName=="cursorShow")
+	{
+		document.getElementById("currentBlock").value= "World activeHand showTemporaryCursor: nil"
+		document.getElementById("currentBlockSimple").value="World activeHand showTemporaryCursor: nil"
+	}
+	if (blockName=="cursorShow")
+	{
+		document.getElementById("currentBlock").value= "World activeHand showTemporaryCursor: nil"
+		document.getElementById("currentBlockSimple").value="Show the cursor."
+	}
+	if (blockName=="cursorHide")
+	{
+		document.getElementById("currentBlock").value= "World activeHand showTemporaryCursor: ((Form extent: 1 @ 1 depth: 32)"+"\n"+"fillColor: Color transparent)"
+		document.getElementById("currentBlockSimple").value="Hide the cursor."
+	}
+/*Operators
+*/
+	if (blockName=="add")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value 1: Number, Temporary variable, or Input variable")
+		tempInputC=prompt("Enter value 2: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_"+tempInputB+" + " + tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB+"+"+tempInputC+"."
+	}
+	if (blockName=="sub")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value 1: Number, Temporary variable, or Input variable")
+		tempInputC=prompt("Enter value 2: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_"+tempInputB+" - " + tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB+"-"+tempInputC+"."
+	}
+	if (blockName=="mul")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value 1: Number, Temporary variable, or Input variable")
+		tempInputC=prompt("Enter value 2: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_"+tempInputB+" * " + tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB+" times "+tempInputC+"."
+	}
+	if (blockName=="div")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value 1: Number, Temporary variable, or Input variable")
+		tempInputC=prompt("Enter value 2: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_"+tempInputB+" / " + tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB+" / "+tempInputC+"."
+	}
+	if (blockName=="pow")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value 1: Number, Temporary variable, or Input variable")
+		tempInputC=prompt("Enter value 2: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_"+tempInputB+" raisedTo: " + tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB+" raised to "+tempInputC+"."
+	}
+	if (blockName=="rnd")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value to round: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_"+tempInputB+" rounded."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB+", rounded."
+	}
+	if (blockName=="join")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value 1: Number, Temporary variable, or Input variable")
+		tempInputC=prompt("Enter value 2: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_ "+tempInputB+" , " + tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB+" joined to "+tempInputC+"."
+	}
+	if (blockName=="joinTN")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value 1: text")
+		tempInputC=prompt("Enter value 2: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_ '"+tempInputB+"' , " + tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB+" joined to "+tempInputC+"."
+	}
+	if (blockName=="letter")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter number to find: Number, Temporary variable, or Input variable")
+		tempInputC=prompt("Enter value: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_ self letter:"+tempInputB+" of: " + tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to letter number "+tempInputB+" of "+tempInputC+"."
+	}
+	if (blockName=="letterT")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter number to find: Number, Temporary variable, or Input variable")
+		tempInputC=prompt("Enter value: Text")
+		document.getElementById("currentBlock").value=tempInputA+"_ self letter:"+tempInputB+" of: '" + tempInputC+"'."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to letter number "+tempInputB+" of "+tempInputC+"."
+	}
+	if (blockName=="length")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value to get length of: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_ "+tempInputB+" size."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the length of "+tempInputB+"."
+	}
+	if (blockName=="lengthT")
+	{
+		tempInputA=prompt("Enter variable to store result in.")
+		tempInputB=prompt("Enter value to get length of: text")
+		document.getElementById("currentBlock").value=tempInputA+"_ '"+tempInputB+"' size."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the length of "+tempInputB+"."
+	}
+	if (blockName=="reverseVar")
+	{
+		tempInputA=prompt("Enter a Temporary variable to reverse")
+		document.getElementById("currentBlock").value=tempInputA+"_ "+tempInputA+" asString reversed."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputA+" backwards."
+	}
+	if (blockName=="lowercaseVar")
+	{
+		tempInputA=prompt("Enter a Temporary variable to lowercase")
+		document.getElementById("currentBlock").value=tempInputA+"_ "+tempInputA+" asString asLowercase."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputA+" in lowercase letters."
+	}
+	if (blockName=="uppercaseVar")
+	{
+		tempInputA=prompt("Enter a Temporary variable to capitalize")
+		document.getElementById("currentBlock").value=tempInputA+"_ "+tempInputA+" asString asUppercase."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputA+" in capital letters."
+	}
+	if (blockName=="shuffleVar")
+	{
+		tempInputA=prompt("Enter a Temporary variable to shuffle.")
+		document.getElementById("currentBlock").value=tempInputA+"_ "+tempInputA+" asString shuffled."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputA+" shuffled."
+	}
+	if (blockName=="rand")
+	{
+		tempInputA=prompt("Enter a Temporary variable to set to the random number.")
+		tempInputB=prompt("Enter upper limit.")
+		tempInputC=prompt("Enter lower limit.")
+		document.getElementById("currentBlock").value=tempInputA+"_ self randomFrom:"+tempInputB+" to: "+tempInputC+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to a random number from:"+tempInputB+" to: "+tempInputC+"."
+	}
+/*Sensing
+*/
+
+	if (blockName=="mX")
+	{
+		tempInputA=prompt("Enter a Temporary variable to set")
+		document.getElementById("currentBlock").value=tempInputA+"_ self mouseX."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to mouse's X position"
+	}
+	if (blockName=="mY")
+	{
+		tempInputA=prompt("Enter a Temporary variable to set")
+		document.getElementById("currentBlock").value=tempInputA+"_ self mouseY."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to mouse's Y position"
+	}
+	if (blockName=="mP")
+	{
+		tempInputA=prompt("Enter temporary variable to set.")
+		document.getElementById("currentBlock").value=tempInputA+" _ self mousePressed."
+		document.getElementById("currentBlockSimple").value="If the mouse is pressed, set "+tempInputA+" to true."
+	}
+	if (blockName=="loudness")
+	{
+		tempInputA=prompt("Enter temporary variable to set.")
+		document.getElementById("currentBlock").value=tempInputA+" _ self soundLevel."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the ambient volume."
+	}
+	if (blockName=="kP")
+	{
+		tempInputA=prompt("Enter key to test: Input/Temporary variable")
+		tempInputB=prompt("Enter Temporary variable to set")
+		document.getElementById("currentBlock").value= tempInputB+"_ self keyPressed:"+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputB+" to true if "+tempInputA+" is pressed."
+	}
+	if (blockName=="answer")
+	{
+		tempInputA=prompt("Enter a temporary variable to store it in.")
+		document.getElementById("currentBlock").value= tempInputA+"_ self answer."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the last answer."
+	}
+	if (blockName=="alert")
+	{
+		tempInputA=prompt("Enter a variable whose value should be alerted.")
+		document.getElementById("currentBlock").value= "DialogBoxMorph warn: "+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Warn "+tempInputA
+	}
+	if (blockName=="ask")
+	{
+		tempInputA=prompt("Enter variable to set to the answer")
+		tempInputB=prompt("Enter variable whose value should be asked.")
+		document.getElementById("currentBlock").value= tempInputA+"_ StringDialog ask: " +tempInputB+"."
+		document.getElementById("currentBlockSimple").value="Ask "+tempInputB+" and set "+tempInputA+" to the answer."
+	}
+	if (blockName=="confirm")
+	{
+		tempInputA=prompt("Enter variable to set to the answer")
+		tempInputB=prompt("Enter a variable whose value is the question to be asked.")
+		document.getElementById("currentBlock").value= tempInputA+"_ self confirm: " +tempInputB+"."
+		document.getElementById("currentBlockSimple").value="Ask "+tempInputB+" and set "+tempInputA+" to the answer."
+	}
+	if (blockName=="copy")
+	{
+		tempInputA=prompt("Enter a Temporary variable whose value should be copied.")
+		document.getElementById("currentBlock").value="ScratchTranslator unicodeClipboardPut: "+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Copy "+tempInputA+" to clipboard."
+	}
+
+/*Variables
+*/
+	if (blockName=="setVar")
+	{
+		tempInputA=prompt("Enter a Temporary variable to set")
+		tempInputB=prompt("Enter what to replace it with: Number, Temporary variable, or Input variable")
+		document.getElementById("currentBlock").value=tempInputA+"_"+tempInputB+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+"to "+tempInputB
+	}
+	if (blockName=="setVarToText")
+	{
+		tempInputA=prompt("Enter a Temporary variable to set")
+		tempInputB=prompt("Enter what to replace it with: Text")
+		document.getElementById("currentBlock").value=tempInputA+"_ '"+tempInputB+"'"+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to "+tempInputB
+	}
+/*Pen
+*/
+	if (blockName=="pD")
+	{
+		tempInputA=prompt("Enter temporary variable to set.")
+		document.getElementById("currentBlock").value=tempInputA+" _ self penDown."
+		document.getElementById("currentBlockSimple").value="If the pen is down, set "+tempInputA+" to true."
+	}
+	if (blockName=="penUp")
+	{
+		document.getElementById("currentBlock").value="self putPenUp."
+		document.getElementById("currentBlockSimple").value="Put the pen up."
+	}
+	if (blockName=="penDown")
+	{
+		document.getElementById("currentBlock").value="self putPenDown."
+		document.getElementById("currentBlockSimple").value="Put the pen down."
+	}
+	if (blockName=="penSize")
+	{
+		tempInputA=prompt("Enter temporary variable to set.")
+		document.getElementById("currentBlock").value=tempInputA+" _ self penSize."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the pen's size."
+	}
+	if (blockName=="stamp")
+	{
+		document.getElementById("currentBlock").value="self stampCostume."
+		document.getElementById("currentBlockSimple").value="self stampCostume."
+	}
+/*Looks
+*/
+	if (blockName=="say")
+	{
+		tempInputA=prompt("Enter temporary variable to say.")
+		document.getElementById("currentBlock").value="self say: "+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Say "+tempInputA+"."
+	}
+	if (blockName=="think")
+	{
+		tempInputA=prompt("Enter temporary variable to think.")
+		document.getElementById("currentBlock").value="self think: "+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Think "+tempInputA+"."
+	}
+	if (blockName=="setCostume")
+	{
+		tempInputA=prompt("Enter temporary variable/input variable/number to set the costume to.")
+		document.getElementById("currentBlock").value="self lookLike: "+tempInputA+"."
+		document.getElementById("currentBlockSimple").value="Switch to costume "+tempInputA+"."
+	}
+	if (blockName=="changeCostume")
+	{
+		tempInputA=prompt("Enter temporary variable to change the costume number by.")
+		document.getElementById("currentBlock").value="self lookLike: "+tempInputA+"+ (self costumeIndex)."
+		document.getElementById("currentBlockSimple").value="Change the costume number by "+tempInputA+"."
+	}
+	if (blockName=="costumeNum")
+	{
+		tempInputA=prompt("Enter temporary variable to set.")
+		document.getElementById("currentBlock").value=tempInputA+" _ self costumeIndex."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the costume number."
+	}
+	if (blockName=="costumeNameByNum")
+	{
+		tempInputA=prompt("Enter temporary variable to set.")
+		tempInputB=prompt("Enter the costume number.")
+		document.getElementById("currentBlock").value=tempInputA+" _ self costumeNameFromNumber:"+tempInputB+"."
+		document.getElementById("currentBlockSimple").value="Set "+tempInputA+" to the costume name of costume "+tempInputB+"."
+	}
+	if (blockName=="hidden")
+	{
+		tempInputA=prompt("Enter temporary variable to store it in.")
+		document.getElementById("currentBlock").value=tempInputA+" _ self isHidden."
+		document.getElementById("currentBlockSimple").value="If hidden, set "+tempInputA+" to true."
+	}
+	if (blockName=="hide")
+	{
+		document.getElementById("currentBlock").value="self hide."
+		document.getElementById("currentBlockSimple").value="Hide."
+	}
+	if (blockName=="show")
+	{
+		document.getElementById("currentBlock").value="self show."
+		document.getElementById("currentBlockSimple").value="Show."
+	}
+	eval(customScripts)
+	document.getElementById("add").focus()
+}
+function closeBlock()
+{
+	code=code+"\n"+document.getElementById("currentBlock").value
+	codeSimple=codeSimple+"\n"+document.getElementById("currentBlockSimple").value
+	document.getElementById("currentBlockSimple").value=""
+	document.getElementById("currentBlock").value=""
+	render()
+}
+function delLast()
+{
+	code=code.substring(0, code.lastIndexOf("\n"))
+	codeSimple=codeSimple.substring(0, codeSimple.lastIndexOf("\n"))
+	render()
+}
+function render()
+{
+	document.getElementById("Code").value=call+"\"Made with Scramble by Hardmath123\""+"\n"+a+code
+	document.getElementById("CodeSimple").value=aSimple+codeSimple
+	document.getElementById("bsCopy").value=document.getElementById("blockspec").value.replace(". . . and the blockspec will appear here!", "You haven't made a blockspec yet. Scroll up to part 1 to make it.")
+}
+function getCustom()
+{
+	var cScript = prompt("Paste the script here")
+	var pos = cScript.indexOf("|")
+	var cSpec = cScript.substr(pos + 1)
+	var cCode = cScript.substr(0, pos)
+	createCookie("spec", readCookie("spec")+cSpec.replace(/;/g, "<semicolon>").replace(/,/g, "<comma>"), 365)
+	createCookie("code", readCookie("code")+cCode.replace(/;/g, "<semicolon>").replace(/,/g, "<comma>"), 365)
+	renderCustom()
+}
+function renderCustom()
+{
+	customScripts = readCookie("code").replace(/null/g, "").replace(/<semicolon>/g, ";").replace(/<comma>/g, ",").replace(/<v>/g, "|")
+	document.getElementById("custom").innerHTML = readCookie("spec").replace(/null/g, "").replace(/<semicolon>/g, ";").replace(/<comma>/g, ",").replace(/<v>/g, "|")
+}
+function delCustom()
+{
+	if (confirm("Are you sure?"))
+	{
+	eraseCookie("spec")
+	eraseCookie("code")
+	customScripts = ""
+	document.getElementById("custom").innerHTML = ""
+	}
+}
+</script>
+
+
+
+
+
+
+
+<script type="text/javascript">
+function createCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function readCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0;i < ca.length;i++) {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+function eraseCookie(name) {
+	createCookie(name,"",-1);
+}
+</script>
+
+
+
+<!--For selection-->
+<script type="text/javascript">
+function selectBS()
+{
+    document.getElementById("bsCopy").select();
+}
+function selectCD()
+{
+    document.getElementById("Code").select();
+}
+</script>
+
+
+
+<!-- ScrambleSpecs-->
+
+<p id="bin1" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Motion-->
+<br><br><br><font color="blue"><img src="http://i.imgur.com/fkRB9.gif">
+<br><input type="radio" name="commands" value="move" onclick="setBlockVal(this.value)">Move the sprite forwards
+<br><input type="radio" name="commands" value="turn" onclick="setBlockVal(this.value)">Turn the sprite [clockwise]
+<br>
+<br><input type="radio" name="commands" value="setPos" onclick="setBlockVal(this.value)">Set the position of the sprite
+<br><input type="radio" name="commands" value="setAngle" onclick="setBlockVal(this.value)">Set the direction of the sprite
+<br><input type="radio" name="commands" value="changeX" onclick="setBlockVal(this.value)">Change the x position of the sprite
+<br><input type="radio" name="commands" value="changeY" onclick="setBlockVal(this.value)">Change the y position of the sprite
+<br>
+<br><input type="radio" name="commands" value="xpos" onclick="setBlockVal(this.value)">Set a variable to the x position
+<br><input type="radio" name="commands" value="ypos" onclick="setBlockVal(this.value)">Set a variable to the y position
+<br><input type="radio" name="commands" value="dir" onclick="setBlockVal(this.value)">Set a variable to the direction</font>
+</p>
+
+
+<p id="bin2" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Looks-->
+<br><br><br><font color="purple"><img src="http://i.imgur.com/FkLfe.gif">
+<br><input type="radio" name="commands" value="say" onclick="setBlockVal(this.value)">Say something
+<br><input type="radio" name="commands" value="think" onclick="setBlockVal(this.value)">Think something
+<br>
+<br><input type="radio" name="commands" value="setCostume" onclick="setBlockVal(this.value)">Set the costume number
+<br><input type="radio" name="commands" value="changeCostume" onclick="setBlockVal(this.value)">Change the costume number by some amount
+<br><input type="radio" name="commands" value="costumeNum" onclick="setBlockVal(this.value)">Set a variable to the costume number
+<br><input type="radio" name="commands" value="costumeNameByNum" onclick="setBlockVal(this.value)">Set a variable to the name of a costume's number
+<br>
+<br><input type="radio" name="commands" value="hide" onclick="setBlockVal(this.value)">Hide the sprite
+<br><input type="radio" name="commands" value="show" onclick="setBlockVal(this.value)">Show the sprite
+<br><input type="radio" name="commands" value="hidden" onclick="setBlockVal(this.value)">Is the sprite hidden?</font>
+</p>
+
+
+
+<p id="bin3" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Control-->
+<br><br><br><font color="orange"><img src="http://i.imgur.com/XTvaM.gif">
+<br><input type="radio" name="commands" value="report" onclick="setBlockVal(this.value)">Report something [no text]
+<br><input type="radio" name="commands" value="reportText" onclick="setBlockVal(this.value)">Report text
+<br>
+<br><input type="radio" name="commands" value="selfDefinedCommand" onclick="setBlockVal(this.value)">Put in a command not given here (from your own knowledge of Squeak)
+<br>
+<br><i>Conditional code: code executed one or many times under specific conditions.</i>
+<br><input type="radio" name="commands" value="repeat" onclick="setBlockVal(this.value)">Repeat some coding
+<br><input type="radio" name="commands" value="ifInput" onclick="setBlockVal(this.value)">Execute some code if the given variable's value is true
+<br><input type="radio" name="commands" value="ifInputFalse" onclick="setBlockVal(this.value)">Execute some code if the given variable's value is false
+
+<br><i>Warning: true is different from 'true'. 'true' is a string, true is a boolean. You cannot, for example, join true to 'Hi', but you can join 'true' to 'Hi' and get 'trueHi'. Be careful!</i>
+<br>
+<br><input type="radio" name="commands" value="ifEQ" onclick="setBlockVal(this.value)">Execute some code if the given values are equal.
+<br><input type="radio" name="commands" value="ifNEQ" onclick="setBlockVal(this.value)">Execute some code if the given values are not equal.
+<br><input type="radio" name="commands" value="ifGT" onclick="setBlockVal(this.value)">Execute some code if the first given value is greater than the second.
+<br>
+<br><input type="radio" name="commands" value="endCC" onclick="setBlockVal(this.value)">End 'if' block
+<br><input type="radio" name="commands" value="endCC" onclick="setBlockVal(this.value)">End 'repeat' block
+<br>
+<br><input type="radio" name="commands" value="addComment" onclick="setBlockVal(this.value)">Add a comment
+<br>
+<br><input type="radio" name="commands" value="link" onclick="setBlockVal(this.value)">Go to a URL stored in a variable (t1 if t1's value was 'http://www.google.com' and you wanted to go to google.com)
+<br>
+<br><input type="radio" name="commands" value="beep" onclick="setBlockVal(this.value)">Emit your OS's beep. To hear it, click <input type="button" onclick="alert(0)" value="here"> and then click outside the popup box.
+<br>
+<br><input type="radio" name="commands" value="cloneSPR" onclick="setBlockVal(this.value)">Clone me
+<br><input type="radio" name="commands" value="DelSPR" onclick="setBlockVal(this.value)">Delete me
+<br><input type="radio" name="commands" value="steppingSpeed" onclick="setBlockVal(this.value)">Set the time between blocks.
+<br><input type="radio" name="commands" value="cursorShow" onclick="setBlockVal(this.value)">Show the cursor
+<br><input type="radio" name="commands" value="cursorHide" onclick="setBlockVal(this.value)">Hide the cursor
+</font>
+</p>
+
+
+<p id="bin4" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Operators-->
+<br><br><br><font color="limeGreen"><img src="http://i.imgur.com/jZA9G.gif">
+<br><input type="radio" name="commands" value="add" onclick="setBlockVal(this.value)">+
+<br><input type="radio" name="commands" value="sub" onclick="setBlockVal(this.value)">-
+<br><input type="radio" name="commands" value="mul" onclick="setBlockVal(this.value)">*
+<br><input type="radio" name="commands" value="div" onclick="setBlockVal(this.value)">/
+<br><input type="radio" name="commands" value="pow" onclick="setBlockVal(this.value)">^
+<br><input type="radio" name="commands" value="rnd" onclick="setBlockVal(this.value)">Round
+<br><input type="radio" name="commands" value="rand" onclick="setBlockVal(this.value)">Random number
+<br>
+<br><input type="radio" name="commands" value="join" onclick="setBlockVal(this.value)">Join (no text)
+<br><input type="radio" name="commands" value="joinTN" onclick="setBlockVal(this.value)">Join (text)
+<br><input type="radio" name="commands" value="letter" onclick="setBlockVal(this.value)">Get a specific character of some value (no text)
+<br><input type="radio" name="commands" value="letterT" onclick="setBlockVal(this.value)">Get a specific character of some value (text)
+<br><input type="radio" name="commands" value="length" onclick="setBlockVal(this.value)">Get the length of some value (no text)
+<br><input type="radio" name="commands" value="lengthT" onclick="setBlockVal(this.value)">Get the length of some value (text)
+<br>
+<br><input type="radio" name="commands" value="lowercaseVar" onclick="setBlockVal(this.value)">Lower-case a variable's value (ScRaMbLe becomes scramble)
+<br><input type="radio" name="commands" value="uppercaseVar" onclick="setBlockVal(this.value)">Capitalize a variable's value (ScRaMbLe becomes SCRAMBLE)
+<br><input type="radio" name="commands" value="reverseVar" onclick="setBlockVal(this.value)">Reverse a variable's value (123 becomes 321)
+<br><input type="radio" name="commands" value="shuffleVar" onclick="setBlockVal(this.value)">Shuffle a variable's value (123 becomes 123, 132, 213, 231, 312, or 321, randomly)</font>
+</p>
+
+
+<p id="bin5" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Sensing-->
+<br><br><br><font color="#1589FF"><img src="http://i.imgur.com/DQtAn.gif">
+<br><input type="radio" name="commands" value="mX" onclick="setBlockVal(this.value)">Mouse X
+<br><input type="radio" name="commands" value="mY" onclick="setBlockVal(this.value)">Mouse Y
+<br>
+<br><input type="radio" name="commands" value="mP" onclick="setBlockVal(this.value)">Mouse Pressed?
+<br><input type="radio" name="commands" value="kP" onclick="setBlockVal(this.value)">Key pressed?
+<br><input type="radio" name="commands" value="loudness" onclick="setBlockVal(this.value)">Surrounding volume
+<br>
+<br><input type="radio" name="commands" value="answer" onclick="setBlockVal(this.value)">Get the last answer (Note: not from the command below, but from the Scratch block [ask [] and wait])
+<br><input type="radio" name="commands" value="alert" onclick="setBlockVal(this.value)">Alert some value. Click <input type="button" value="here" onclick="alert(name)" name="value to be alerted"> to see what it will do.
+<br><input type="radio" name="commands" value="ask" onclick="setBlockVal(this.value)">Ask for some value, then set a variable to the answer. Click <input type="button" value="here" onclick="prompt(name)" name="value to be asked"> to see what it will do.
+<br><input type="radio" name="commands" value="confirm" onclick="setBlockVal(this.value)">Ask a yes/no then set a variable to the answer (true or false). Click <input type="button" value="here" onclick="confirm(name)" name="Question to be asked"> to see what it will do.
+<br><input type="radio" name="commands" value="copy" onclick="setBlockVal(this.value)">Copy some text
+</font>
+</p>
+<div style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<p id="bin6" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Sound-->
+<br><br><br><font color="darkPink"><img src="http://i.imgur.com/Ze0KH.gif">
+<br><i>No commands here yet!</i>
+</font>
+</p>
+
+<p id="bin7" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Variables-->
+<br><br><br><font color="red"><img src="http://i.imgur.com/wG1Rn.gif">
+<br><input type="radio" name="commands" value="setVar" onclick="setBlockVal(this.value)">Set a variable [no text]
+<br><input type="radio" name="commands" value="setVarToText" onclick="setBlockVal(this.value)">Set a variable to text</font>
+</p>
+
+<p id="bin8" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Pen-->
+<br><br><br><font color="green"><img src="http://i.imgur.com/bKNYn.gif">
+<br><input type="radio" name="commands" value="pD" onclick="setBlockVal(this.value)">Pen down?
+<br><input type="radio" name="commands" value="penUp" onclick="setBlockVal(this.value)">Put pen up
+<br><input type="radio" name="commands" value="penDown" onclick="setBlockVal(this.value)">Put pen down
+<br><input type="radio" name="commands" value="penSize" onclick="setBlockVal(this.value)">Set a variable to the pen's size
+<br><input type="radio" name="commands" value="stamp" onclick="setBlockVal(this.value)">Stamp the costume
+</font>
+</p>
+
+
+<div id="bin9" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<!--Custom-->
+<br><img src="http://i.imgur.com/nTEgT.gif">
+<br>Custom blocks can be downloaded from the <a href="http://scratch.mit.edu/forums/viewtopic.php?pid=816947#p816947">Scramble Library</a>. <i>Use the Developable Version to experiment first, because custom blocks may harm Scramble.</i> Extensions can also be added here.
+<br>
+<blockquote id="custom"></blockquote>
+<br><input type="button" value="Get it!" onclick="getBlock()">
+
+<br><input type="button" value="Add a custom block" onclick="getCustom()">
+<br><input type="button" value="Delete all custom blocks." onclick="delCustom()">
+</div>
+</div>
+<hr>
+<br>
+<div id="devTools">
+</div>
+<script type="text/javascript">
+function showDevTools()
+{
+	document.getElementById("devTools").innerHTML = document.getElementById("dev").innerHTML
+}
+</script>
+<div id="dev" style="visibility:hidden; overflow:scroll; height:10px;width:10px;">
+<br><textarea style="font-family:andale mono" id="terminal" rows=20, cols=100>/*Your terminal: type JavaScript here to edit Scramble*/</textarea>
+<br><input type="button" value="Execute" onclick="executeTerminal()">
+<br><input type="button" value="Edit Scramble" onclick="document.body.contentEditable='true'; document.designMode='on'; void 0">
+</div>
+<script type="text/javascript">
+function executeTerminal()
+{
+	eval(document.getElementById('terminal').value)
+	document.getElementById('terminal').value=""
+	document.getElementById('terminal').focus()
+}
+</script>
